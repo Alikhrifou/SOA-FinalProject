@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: cascandavor
+      MYSQL_DATABASE: zarchive
+      MYSQL_USER: user
+      MYSQL_PASSWORD: prettyuser
+    ports:
+      - "3316:3306"
+  zarchive:
+    build: .
+    container_name: zarchive
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      ZARCHIVE_DATABASE_URL: jdbc:mysql://mysql:3306/zarchive
+      ZARCHIVE_DATABASE_USERNAME: user
+      ZARCHIVE_DATABASE_PASSWORD: prettyuser
+
